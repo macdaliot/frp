@@ -62,14 +62,14 @@ var _ = Describe("[Feature: Server Manager]", func() {
 		framework.NewRequestExpect(f).PortName(tcpPortName).Ensure()
 
 		// Not Allowed
-		framework.NewRequestExpect(f).RequestModify(framework.SetRequestPort(20001)).ExpectError(true).Ensure()
+		framework.NewRequestExpect(f).Port(20001).ExpectError(true).Ensure()
 
 		// Unavailable, already bind by frps
 		framework.NewRequestExpect(f).PortName(consts.PortServerName).ExpectError(true).Ensure()
 
 		// UDP
 		// Allowed in range
-		framework.NewRequestExpect(f).RequestModify(framework.SetRequestProtocol("udp")).PortName(udpPortName).Ensure()
+		framework.NewRequestExpect(f).Protocol("udp").PortName(udpPortName).Ensure()
 
 		// Not Allowed
 		framework.NewRequestExpect(f).RequestModify(func(r *request.Request) {
